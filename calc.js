@@ -11,133 +11,99 @@ const equal = document.getElementById('equal');
 let buildNumber =[];
 let calculateValues =[];
 let secondNumber = Number(0);
-let intValue = Number(0);
+let firstNumber = Number(0);
 let operator;
 let answer;
-let arryValue;
-let stopBuildingNumber;
+
+
 
 display.textContent = Number(0);
 
 numBtns.forEach(btn => {
-  btn.addEventListener('click', function() {
-  if (operator !=='+' && operator !== '-' && operator !== 'x' && operator !== '/'){
-    calculateValues.shift()
-    buildNumber.push(Number(this.value))
-    console.log(buildNumber)
-    intValue = Number(buildNumber.join(""))
-    answer = Number(buildNumber.join(""))
-    console.log(intValue)
-    display.textContent = intValue}
-  else{
-    
-  if (stopBuildingNumber !='yes'){
+  btn.addEventListener('click', function() {    
+  if (operator != '+' && secondNumber === 0){
+  console.log(operator)
   calculateValues.shift()
   buildNumber.push(Number(this.value))
-  console.log(buildNumber)
-  let arryValue = Number(buildNumber.join(""))
-  console.log(arryValue)
-  calculateValues.push(Number(arryValue))
-  console.log(calculateValues)
-  console.log(answer)
-  display.textContent = arryValue
+  firstNumber = Number(buildNumber.join(""))
+  console.log(firstNumber)
+  display.textContent = firstNumber
   }
+
+  else if(firstNumber > 0){
+    calculateValues.shift()
+    buildNumber.push(Number(this.value))
+    secondNumber = Number(buildNumber.join(""))
+    console.log(secondNumber)
+    console.log(firstNumber)
+    display.textContent = secondNumber
   }
-}) //Number btns
-}) //Number btns
 
-if (display.textContent === ''){
-  stopBuildingNumber = 'yes'
-}
+  if (firstNumber > 0 && secondNumber > 0 && answer > 0 ){
+    switch (operator){
+      case '+':
+        answer = add(answer,secondNumber)
+        display.textContent = answer
+        console.log(answer)
+        
+        break;
+      case '-':
+        answer = subtract(answer,secondNumber)
+        display.textContent = answer
+        console.log(answer)
+        break;
+      case '/':
+        answer = divide(answer,secondNumber)
+        display.textContent = answer
+        console.log(answer)
+        break;
+      case 'x':
+        answer = multiply(answer,secondNumber)
+        display.textContent = answer
+        console.log(answer)
+        break;
+     }
 
+  }
+ else if (firstNumber > 0 && secondNumber > 0){
+    switch (operator){
+      case '+':
+        answer = add(firstNumber,secondNumber)
+        console.log(answer)
+        
+        break;
+      case '-':
+        answer = subtract(firstNumber,secondNumber)
+        console.log(answer)
+        break;
+      case '/':
+        answer = divide(firstNumber,secondNumber)
+        console.log(answer)
+        break;
+      case 'x':
+        answer = multiply(firstNumber,secondNumber)
+        console.log(answer)
+        break;
+     }
+    }//if first and 2nd number greater than 0
+    
+    })
 
 operatorBtns.forEach(btn => {
   btn.addEventListener('click', function() {
+    display.textContent =''
+    buildNumber.length = ''
+
   operator = this.value
-switch (this.value){
-  case '+':
-    display.textContent = ''
-    buildNumber.length = 0;
-    answer = calculateValues.reduce((a,b) => add(a,b),intValue)
-    intValue = answer
-    stopBuildingNumber = ''
-    console.log(answer)
-    break;
-  case '-':
-    display.textContent = ''
-    buildNumber.length = 0;
-    console.log(answer)
-    console.log(intValue)
-    answer = calculateValues.reduce((a,b) => subtract(a,b),intValue)
-    console.log(intValue)
-    intValue = answer
-    stopBuildingNumber = ''
-    console.log(answer)
-    break;
-  case '/':
-    display.textContent = ''
-    buildNumber.length = 0;
-    answer = calculateValues.reduce((a,b) => divide(a,b),intValue)
-    intValue = answer
-    stopBuildingNumber = ''
-    console.log(answer)
-    break;
-  case 'x':
-    display.textContent = ''
-    buildNumber.length = 0;
-    answer = calculateValues.reduce((a,b) => multiply(a,b),intValue)
-    intValue = answer
-    stopBuildingNumber = ''
-    console.log(answer)
-    break;
- }
 
 })
-})
-
+}) //Number btns
+}) //Number btns
 
 
 equal.addEventListener('click', function() {
 
-  switch (operator){
-    case '+':
-      answer = calculateValues.reduce((a,b) => add(a,b),intValue)
-      intValue = answer
       display.textContent = answer
-      stopBuildingNumber = ''
-      buildNumber.length = 0;
-      calculateValues.length= 0 
-      console.log(answer)
-      break;
-    case '-':
-      answer = calculateValues.reduce((a,b) => subtract(a,b),intValue)
-      intValue = answer
-      display.textContent = answer
-      stopBuildingNumber = ''
-      buildNumber.length = 0;
-      calculateValues.length= 0
-      console.log(answer)
-      break;
-    case '/':
-      answer = calculateValues.reduce((a,b) => divide(a,b),intValue)
-      intValue = answer
-      display.textContent = answer
-      stopBuildingNumber = ''
-      buildNumber.length = 0;
-      calculateValues.length= 0
-      console.log(answer)
-      break;
-    case 'x':
-      answer = calculateValues.reduce((a,b) => multiply(a,b),intValue)
-      intValue = answer
-      display.textContent = answer
-      stopBuildingNumber = ''
-      buildNumber.length = 0;
-      calculateValues.length= 0
-      console.log(answer)
-      break; }
 
 });
-
-
 
