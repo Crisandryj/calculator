@@ -1,8 +1,20 @@
-function add(a,b) {return a + b}
-function subtract(a,b){return a - b}
-function divide(a,b){return a/b}
-function multiply(a,b){return a*b}
+function operate(a,b){
 
+switch (operator){
+  case '+':
+  answer = a + b
+  break;
+  case '-':
+  answer = a - b
+  break;
+  case '/':
+  answer = a/b
+  break;
+  case 'x':
+  answer = a*b
+  break;
+}
+}
 const display = document.getElementById('display');
 const numBtns = document.querySelectorAll('.btn');
 const operatorBtns = document.querySelectorAll('.opBtn');
@@ -13,97 +25,76 @@ let calculateValues =[];
 let secondNumber = Number(0);
 let firstNumber = Number(0);
 let operator;
-let answer;
-
-
+let answer = Number(0);
+let continueBuildingNumber = true;
+let counter = Number(0);
 
 display.textContent = Number(0);
 
-numBtns.forEach(btn => {
-  btn.addEventListener('click', function() {    
-  if (operator != '+' && secondNumber === 0){
-  console.log(operator)
+function showAnswer(){
+  display.textContent = answer
+}
+
+function buildFirstNumber(num){
   calculateValues.shift()
-  buildNumber.push(Number(this.value))
+  buildNumber.push(Number(num))
   firstNumber = Number(buildNumber.join(""))
-  console.log(firstNumber)
+}
+function buildSecondNumber(num){
+  calculateValues.shift()
+  buildNumber.push(Number(num))
+  secondNumber = Number(buildNumber.join(""))
+}
+
+function showFirstNumber(){
   display.textContent = firstNumber
-  }
+}
+function showSecondNumber(){
+  display.textContent = secondNumber
+}
 
-  else if(firstNumber > 0){
-    calculateValues.shift()
-    buildNumber.push(Number(this.value))
-    secondNumber = Number(buildNumber.join(""))
-    console.log(secondNumber)
-    console.log(firstNumber)
-    display.textContent = secondNumber
-  }
 
-  if (firstNumber > 0 && secondNumber > 0 && answer > 0 ){
-    switch (operator){
-      case '+':
-        answer = add(answer,secondNumber)
-        display.textContent = answer
-        console.log(answer)
-        
-        break;
-      case '-':
-        answer = subtract(answer,secondNumber)
-        display.textContent = answer
-        console.log(answer)
-        break;
-      case '/':
-        answer = divide(answer,secondNumber)
-        display.textContent = answer
-        console.log(answer)
-        break;
-      case 'x':
-        answer = multiply(answer,secondNumber)
-        display.textContent = answer
-        console.log(answer)
-        break;
-     }
-
-  }
- else if (firstNumber > 0 && secondNumber > 0){
-    switch (operator){
-      case '+':
-        answer = add(firstNumber,secondNumber)
-        console.log(answer)
-        
-        break;
-      case '-':
-        answer = subtract(firstNumber,secondNumber)
-        console.log(answer)
-        break;
-      case '/':
-        answer = divide(firstNumber,secondNumber)
-        console.log(answer)
-        break;
-      case 'x':
-        answer = multiply(firstNumber,secondNumber)
-        console.log(answer)
-        break;
-     }
-    }//if first and 2nd number greater than 0
-    
-    })
-
+ 
 operatorBtns.forEach(btn => {
   btn.addEventListener('click', function() {
     display.textContent =''
     buildNumber.length = ''
-
-  operator = this.value
-
+    operator = this.value
 })
+}) //oper btn
+  
+numBtns.forEach(btn => {
+  btn.addEventListener('click', function() {    
+  if (operator != '+' && secondNumber === 0){
+    buildFirstNumber(this.value)
+    showFirstNumber()
+  }
+
+  else if(firstNumber > 0 && operator === '+'){
+    buildSecondNumber(this.value)
+    showSecondNumber()
+  }
+ 
+  if (answer > 0){
+    operate(answer,secondNumber)
+   
+  }
+
+  else if (firstNumber > 0 && secondNumber > 0 && answer === 0){
+    operate(firstNumber,secondNumber)
+  
+  }
+    
+  })
+
 }) //Number btns
-}) //Number btns
+
+
 
 
 equal.addEventListener('click', function() {
 
-      display.textContent = answer
+      showAnswer()
 
 });
 
